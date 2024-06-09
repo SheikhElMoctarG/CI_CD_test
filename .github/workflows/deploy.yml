@@ -6,18 +6,47 @@ on:
 
 jobs:
   Deploy:
+    env: 
+      PRIVATE_KEY: ${{ secrets.SHH_PRIVATE_KEY }}
+      HOSTNAME: ${{ secrets.IP_ADDRESS }}
+      USER_NAME: ${{ secrets.USER_NAME }}
+      PROJECT_DIRECTORY: ${{ secrets.PROJECT_DIRECTORY }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+
+
     name: Deploy to my server
     runs-on: ubuntu-latest
 
     steps: 
-      - uses: actions/checkout@v2
-      - name: Build & Deploy
-        env: 
-          PRIVATE_KEY: ${{ secrets.SHH_PRIVATE_KEY }}
-          HOSTNAME: ${{ secrets.IP_ADDRESS }}
-          USER_NAME: ${{ secrets.USER_NAME }}
-          PROJECT_DIRECTORY: ${{ secrets.PROJECT_DIRECTORY }}
+      - name: connect to server using ssh
+        uses: appleboy/ssh-action/master
+        with: 
+          host: ${{ secrets.IP_ADDRESS }}
+          username: ${{ secrets.USER_NAME }}
+          password: ${{ secrets.PASSWORD }}
+          port:22
+          script: | 
+            cd /$PROJECT_DIRECTORY
+            git reset --hard 
+            git pull origin main 
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            sudo rm -rf nuxt_archive.tar.gz
 
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: use Node.js
+        uses: actions/setup-node@main
+        with:
+          node-version: "latest"
+      - run: pwd
+      - run: npm i 
+      - run: | 
+          npm run dev 
+          mkdir -p out
+
+        
         run: | 
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key 
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}
