@@ -24,7 +24,7 @@ jobs:
           host: ${{ secrets.IP_ADDRESS }}
           username: ${{ secrets.USER_NAME }}
           password: ${{ secrets.PASSWORD }}
-          port:22
+          port: 22
           script: | 
             cd /$PROJECT_DIRECTORY
             git reset --hard 
