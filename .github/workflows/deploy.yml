@@ -35,11 +35,7 @@ jobs:
 
       - name: checkout code
         uses: actions/checkout@v4
-
-      - name: use Node.js
-        uses: actions/setup-node@main
-        with:
-          node-version: "latest"
+        
       - run: pwd
       - run: npm i 
       - run: | 
@@ -47,14 +43,6 @@ jobs:
           mkdir -p out
 
         
-        run: | 
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key 
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}
-
-            cd /home/${USER_NAME}/${PROJECT_DIRECTORY}/ && git checkout main &&
-            git fetch --all && git reset --hard origin/main && 
-            git pull origin main && sudo npm i && sudo npm run dev 
-
 
 
 
