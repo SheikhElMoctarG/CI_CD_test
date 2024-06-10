@@ -19,7 +19,7 @@ jobs:
 
     steps: 
       - name: connect to server using ssh
-        uses: appleboy/ssh-action/master
+        uses: appleboy/ssh-action@master
         with: 
           host: ${{ secrets.IP_ADDRESS }}
           username: ${{ secrets.USER_NAME }}
@@ -35,7 +35,12 @@ jobs:
 
       - name: checkout code
         uses: actions/checkout@v4
-        
+
+      - name: use Node.js
+        uses: actions/setup-node@main
+        with:
+          node-version: "latest"
+          
       - run: pwd
       - run: npm i 
       - run: | 
