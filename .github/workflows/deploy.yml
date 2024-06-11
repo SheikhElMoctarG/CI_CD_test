@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: 22
           script: | 
-            cd /CI_CD_test 
+            cd /CI_CD_test  
             git reset --hard 
             git pull origin main 
             export NVM_DIR=~/.nvm
