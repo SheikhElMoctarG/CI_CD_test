@@ -63,7 +63,7 @@ jobs:
             sudo rm -rf nuxt_archive.tar.gz
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            pm2 restart all
+            pm2 restart my-dev-server
 
 
         
