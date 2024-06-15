@@ -47,7 +47,33 @@ jobs:
       - run: npm run build --if-present
       - run: mkdir -p out
       - run: tar -czvf out/nuxt_archive.tar.gz .output
-      - run: node .output/server/index.mjs
+      
+      - name: run system
+        uses: appleboy/ssh-action@master
+        with: 
+          host: ${{ secrets.IP_ADDRESS }}
+          username: ${{ secrets.USER_NAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          script: | 
+            cd /CI_CD_test  
+            - name: connect to server using ssh
+        uses: appleboy/ssh-action@master
+        with: 
+          host: ${{ secrets.IP_ADDRESS }}
+          username: ${{ secrets.USER_NAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          script: | 
+            cd /CI_CD_test  
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            cd /CI_CD_test  
+            sudo rm -rf nuxt_archive.tar.gz
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            pm2 restart all
+
 
         
 
