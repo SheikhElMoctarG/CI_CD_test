@@ -48,18 +48,7 @@ jobs:
       - run: mkdir -p out
       - run: tar -czvf out/nuxt_archive.tar.gz .output
       
-      - name: run system
-        uses: appleboy/ssh-action@master
-        with: 
-          host: ${{ secrets.IP_ADDRESS }}
-          username: ${{ secrets.USER_NAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: 22
-          script: | 
-            cd /CI_CD_test  
-            
-            
-      - name: connect to server using ssh
+      - name: trying to run system..
         uses: appleboy/ssh-action@master
         with: 
           host: ${{ secrets.IP_ADDRESS }}
