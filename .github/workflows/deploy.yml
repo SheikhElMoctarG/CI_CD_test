@@ -60,7 +60,9 @@ jobs:
             cd /CI_CD_test  
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            cd /CI_CD_test  
+            # cd /CI_CD_test  
+            git pull origin main 
+            npm i
             sudo rm -rf nuxt_archive.tar.gz
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
