@@ -56,6 +56,8 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: 22
           script: | 
+            ls 
+            pwd
             cd /CI_CD_test  
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
